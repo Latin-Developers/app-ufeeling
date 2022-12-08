@@ -30,15 +30,14 @@ module UFeeling
         session[:watching] ||= []
 
         # Load previously searched videos
-        videos = UFeeling::Videos::Repository::For.klass(UFeeling::Videos::Entity::Video)
-          .find_ids(session[:watching])
+        videos = []
 
         session[:watching] = videos.map(&:id)
 
         flash.now[:notice] = 'Search for a video to get started' if videos.none?
 
-        viewed_videos = Views::VideoList.new(videos)
-        view 'home', locals: { videos: viewed_videos }
+        # viewed_videos = Views::VideoList.new(videos)
+        view 'home', locals: { videos: [] }
       end
 
       # [...] /videos/

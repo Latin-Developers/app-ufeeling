@@ -7,46 +7,45 @@ task :default do
   puts `rake -T`
 end
 
-desc 'Run tests once'
+desc 'Run unit and integration tests'
 Rake::TestTask.new(:spec) do |t|
-  t.pattern = 'spec/*_spec.rb'
+  t.pattern = 'spec/tests/{integration,unit}/**/*_spec.rb'
   t.warning = false
 end
 
-desc 'Keep rerunning tests upon changes'
+desc 'Keep rerunning unit/integration tests upon changes'
 task :respec do
-  sh "rerun -c 'rake spec' --ignore 'coverage/*'"
+  sh "rerun -c 'rake spec' --ignore 'coverage/*' --ignore 'repostore/*'"
 end
 
-task :run do
-  sh 'bundle exec puma'
-end
-
-desc 'Run the webserver and application and restart if code changes'
-task :rerun do
-  sh "rerun -c --ignore 'coverage/*' --ignore 'repostore/*' -- bundle exec puma"
-end
-
-desc 'Run application console'
-task :console do
-  sh 'pry -r ./load_all'
+# NOTE: run `rake run:test` in another process
+desc 'Run acceptance tests only'
+Rake::TestTask.new(:spec_accept) do |t|
+  t.pattern = 'spec/tests/acceptance/*_spec.rb'
+  t.warning = false
 end
 
 desc 'Generates a 64 by secret for Rack::Session'
 task :new_session_secret do
   require 'base64'
-  require 'securerandom'
+  require 'SecureRandom'
   secret = SecureRandom.random_bytes(64).then { Base64.urlsafe_encode64(_1) }
   puts "SESSION_SECRET: #{secret}"
 end
 
-namespace :vcr do
-  desc 'delete cassette fixtures'
-  task :wipe do
-    sh 'rm spec/fixtures/cassettes/*.yml' do |ok, _|
-      puts(ok ? 'Cassettes deleted' : 'No cassettes found')
-    end
+namespace :run do
+  task :dev do
+    sh "rerun -c --ignore 'coverage/*' --ignore 'repostore/*' -- bundle exec puma"
   end
+
+  task :test do
+    sh sh "rerun -c --ignore 'coverage/*' --ignore 'repostore/*' -- bundle exec puma -p 9000"
+  end
+end
+
+desc 'Run application console'
+task :console do
+  sh 'pry -r ./load_all'
 end
 
 namespace :quality do
@@ -68,44 +67,5 @@ namespace :quality do
   desc 'complexiy analysis'
   task :flog do
     sh "flog -m #{only_app}"
-  end
-end
-
-namespace :db do
-  task :config do
-    require 'sequel'
-    require_relative 'config/environment' # load config info
-    require_relative 'spec/helpers/database_helper'
-
-    def app = UFeeling::App
-  end
-
-  desc 'Run migrations'
-  task migrate: :config do
-    Sequel.extension :migration
-    puts "Migrating #{app.environment} database to latest"
-    Sequel::Migrator.run(app.DB, 'db/migrations')
-  end
-
-  desc 'Wipe records from all tables'
-  task wipe: :config do
-    if app.environment == :production
-      puts 'Do not damage production database!'
-      return
-    end
-
-    require_app('infrastructure') # En el PDF de la semana no incluye esto pero en el codigo de Git si
-    DatabaseHelper.wipe_database
-  end
-
-  desc 'Delete dev or test database file (set correct RACK_ENV)'
-  task drop: :config do
-    if app.environment == :production
-      puts 'Do not damage production database!'
-      return
-    end
-
-    FileUtils.rm(UFeeling::App.config.DB_FILENAME)
-    puts "Deleted #{UFeeling::App.config.DB_FILENAME}"
   end
 end
