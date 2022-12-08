@@ -10,10 +10,13 @@ module UFeeling
     plugin :halt
     plugin :flash
     plugin :all_verbs # allows HTTP verbs beyond GET/POST (e.g., DELETE)
+    plugin :caching
     plugin :render, engine: 'slim', views: 'app/presentation/views_html'
     plugin :public, root: 'app/presentation/public'
     plugin :assets, path: 'app/presentation/assets', css: 'style.css'
     plugin :common_logger, $stderr
+
+    use Rack::MethodOverride
 
     route do |routing|
       routing.assets # load CSS
@@ -30,14 +33,22 @@ module UFeeling
         session[:watching] ||= []
 
         # Load previously searched videos
-        videos = []
+        # videos = UFeeling::Videos::Repository::For.klass(UFeeling::Videos::Entity::Video)
+        # .find_ids(session[:watching])
+        result = Services::ListVideos.new.call(session[:watching])
 
-        session[:watching] = videos.map(&:id)
+        if result.failure?
+          flash[:error] = result.failure
+          viewable_videos = []
+        else
+          videos = result.value!.videos
+          flash.now[:notice] = 'Add a Youtube video to get started' if videos.none?
 
-        flash.now[:notice] = 'Search for a video to get started' if videos.none?
+          # session[:watching] = videos.map(&:origin_id)
+          viewable_videos = Views::VideoList.new(videos)
+        end
 
-        # viewed_videos = Views::VideoList.new(videos)
-        view 'home', locals: { videos: [] }
+        view 'home', locals: { videos: viewable_videos }
       end
 
       # [...] /videos/
@@ -54,7 +65,7 @@ module UFeeling
             end
 
             video = new_video.value!
-            session[:watching].insert(0, video.id).uniq!
+            session[:watching].insert(0, video.origin_id).uniq!
             flash[:notice] = 'New video added'
             routing.redirect "videos/#{video.origin_id}"
           end
@@ -66,14 +77,14 @@ module UFeeling
           routing.is do
             routing.get do
               # Get Video from database
-              video = Services::GetVideo.new.call(video_origin_id)
+              video_result = Services::GetVideo.new.call(video_id: video_origin_id)
 
-              if video.failure?
-                flash[:error] = video.failure
+              if video_result.failure?
+                flash[:error] = video_result.failure
                 routing.redirect '/'
               end
 
-              video_info = Views::VideoInfo.new(video.value![:video], video.value![:comments])
+              video_info = Views::VideoInfo.new(video_result.value!, [])
 
               # Show viewer the video
               view 'video', locals: { video_info: }

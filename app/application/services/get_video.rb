@@ -9,30 +9,25 @@ module UFeeling
       include Dry::Transaction
 
       step :get_video
-      step :get_comments
+      step :reify_video
 
       private
 
-      def get_video(video_id)
-        video = Videos::Repository::For.klass(Videos::Entity::Video)
-          .find(video_id)
+      def get_video(input)
+        result = UFeeling::Gateway::Api.new(UFeeling::App.config)
+          .get_video(input[:video_id])
 
-        if video
-          Success(video:)
-        else
-          Failure("Video #{video_id} not found")
-        end
+        result.success? ? Success(result.payload) : Failure(result.message)
       rescue StandardError
         Failure('Could not obtain video')
       end
 
-      def get_comments(input)
-        input[:comments] = Videos::Repository::For.klass(Videos::Entity::Comment)
-          .find_video_comments(input[:video][:id])
-
-        Success(input)
+      def reify_video(video_json)
+        Representer::Video.new(OpenStruct.new)
+          .from_json(video_json)
+          .then { |video| Success(video) }
       rescue StandardError
-        Failure('Could not get video comments')
+        Failure('Could not parse response from API')
       end
     end
   end
