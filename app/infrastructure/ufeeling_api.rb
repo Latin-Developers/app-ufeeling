@@ -28,6 +28,10 @@ module UFeeling
         @request.get_video(video_id)
       end
 
+      # TODO: get_comments
+      # TODO get_sentiment_summary
+      # TODO get_sentiment_trend
+
       # HTTP request transmitter
       class Request
         def initialize(config)
@@ -51,6 +55,10 @@ module UFeeling
         def add_video(video_id)
           call_api('post', ['videos', video_id])
         end
+
+        # TODO: get_comments
+        # TODO get_sentiment_summary
+        # TODO get_sentiment_trend
 
         private
 

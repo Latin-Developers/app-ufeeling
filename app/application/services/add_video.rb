@@ -9,8 +9,8 @@ module UFeeling
       include Dry::Transaction
 
       step :parse_url
-      step :request_video
-      step :reify_video
+      step :request_video_from_api
+      step :format_video
 
       private
 
@@ -24,7 +24,7 @@ module UFeeling
         end
       end
 
-      def request_video(input)
+      def request_video_from_api(input)
         result = UFeeling::Gateway::Api.new(UFeeling::App.config)
           .add_video(input[:video_id])
 
@@ -35,7 +35,7 @@ module UFeeling
         Failure('Cannot add videos right now; please try again later')
       end
 
-      def reify_video(video_json)
+      def format_video(video_json)
         Representer::Video.new(OpenStruct.new)
           .from_json(video_json)
           .then { |video| Success(video) }

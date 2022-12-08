@@ -9,7 +9,7 @@ module UFeeling
       include Dry::Transaction
 
       step :get_video
-      step :reify_video
+      step :format_video
 
       private
 
@@ -22,7 +22,7 @@ module UFeeling
         Failure('Could not obtain video')
       end
 
-      def reify_video(video_json)
+      def format_video(video_json)
         Representer::Video.new(OpenStruct.new)
           .from_json(video_json)
           .then { |video| Success(video) }

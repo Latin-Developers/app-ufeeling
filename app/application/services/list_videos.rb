@@ -9,7 +9,7 @@ module UFeeling
       include Dry::Transaction
 
       step :get_api_list
-      step :reify_list
+      step :format_video
 
       private
 
@@ -23,7 +23,7 @@ module UFeeling
         Failure('Could not access our API')
       end
 
-      def reify_list(videos_json)
+      def format_video(videos_json)
         Representer::VideosList.new(OpenStruct.new)
           .from_json(videos_json)
           .then { |videos| Success(videos) }
