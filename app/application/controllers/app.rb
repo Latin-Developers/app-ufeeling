@@ -35,7 +35,7 @@ module UFeeling
         # Load previously searched videos
         # videos = UFeeling::Videos::Repository::For.klass(UFeeling::Videos::Entity::Video)
         # .find_ids(session[:watching])
-        result = Services::ListVideos.new.call(session[:watching])
+        result = Services::HomePage.new.call(video_ids: session[:watching])
 
         if result.failure?
           flash[:error] = result.failure
@@ -44,7 +44,7 @@ module UFeeling
           videos = result.value!.videos
           flash.now[:notice] = 'Add a Youtube video to get started' if videos.none?
 
-          # session[:watching] = videos.map(&:origin_id)
+          session[:watching] = videos.map(&:origin_id)
           viewable_videos = Views::VideoList.new(videos)
         end
 

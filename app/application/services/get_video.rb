@@ -10,6 +10,10 @@ module UFeeling
 
       step :get_video
       step :format_video
+      # TODO: step :get_comments
+      # TODO: step :format_comments
+      # TODO: step :get_summary
+      # TODO: step :format_summary
 
       private
 
