@@ -35,11 +35,11 @@ end
 
 namespace :run do
   task :dev do
-    sh "rerun -c --ignore 'coverage/*' --ignore 'repostore/*' -- bundle exec puma"
+    sh "rerun -c --ignore 'coverage/*' --ignore 'repostore/*' -- bundle exec puma -p 9292"
   end
 
   task :test do
-    sh sh "rerun -c --ignore 'coverage/*' --ignore 'repostore/*' -- bundle exec puma -p 9000"
+    sh sh "rerun -c --ignore 'coverage/*' --ignore 'repostore/*' -- bundle exec puma -p 9292"
   end
 end
 
