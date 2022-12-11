@@ -86,6 +86,12 @@ module UFeeling
 
               video_info = Views::VideoInfo.new(video_result.value!, [])
 
+              # Setting Cache headers for Proxy and Browser
+              # ? Deberiamos crear un helper para dejar el(los) tiempo(s) de Cache en una constante?
+              App.configure :production do
+                response.expires 120, public: true
+              end
+
               # Show viewer the video
               view 'video', locals: { video_info: }
             end
