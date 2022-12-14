@@ -18,11 +18,14 @@ module UFeeling
       private
 
       def get_previous_videos(input)
-        UFeeling::Gateway::Api.new(UFeeling::App.config)
-          .video_list(input[:video_ids])
-          .then do |result|
-            result.success? ? Success(result.payload) : Failure(result.message)
-          end
+        if input[:video_ids].size.zero?
+          Success('{"videos": []}')
+        else
+          UFeeling::Gateway::Api.new(UFeeling::App.config).video_list(input[:video_ids])
+            .then do |result|
+              result.success? ? Success(result.payload) : Failure(result.message)
+            end
+        end
       rescue StandardError
         Failure('Could not access our API')
       end
