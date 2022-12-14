@@ -36,7 +36,7 @@ module UFeeling
       end
 
       def format_video(video_json)
-        Representer::Video.new(OpenStruct.new)
+        Representer::Video.new(OpenStruct.new) # rubocop:disable Style/OpenStructUse
           .from_json(video_json)
           .then { |video| Success(video) }
       rescue StandardError
