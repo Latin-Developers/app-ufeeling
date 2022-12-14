@@ -41,7 +41,8 @@ module UFeeling
           flash[:error] = result.failure
           viewable_videos = []
         else
-          videos = result.value!.videos
+          videos = result.value![:videos].videos
+          categories = result.value![:categories].categories
           flash.now[:notice] = 'Add a Youtube video to get started' if videos.none?
 
           # session[:watching] = videos.map(&:origin_id)

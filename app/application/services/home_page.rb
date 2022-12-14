@@ -10,8 +10,8 @@ module UFeeling
 
       step :get_previous_videos
       step :format_previous_videos
-      # TODO: step :get_categories
-      # TODO: step :format_categories
+      step :get_categories
+      step :format_categories
       # TODO: step :get_videos_by_category
       # TODO: step :format_videos_by_category
 
@@ -33,7 +33,28 @@ module UFeeling
       def format_previous_videos(videos_json)
         Representer::VideosList.new(OpenStruct.new)
           .from_json(videos_json)
-          .then { |videos| Success(videos) }
+          .then { |videos| Success(videos:) }
+      rescue StandardError
+        Failure('Could not parse response from API')
+      end
+
+      def get_categories(input)
+        UFeeling::Gateway::Api.new(UFeeling::App.config).category_list
+          .then do |result|
+            input[:categories_json] = result.payload
+            result.success? ? Success(input) : Failure(result.message)
+          end
+      rescue StandardError
+        Failure('Could not access our API')
+      end
+
+      def format_categories(input)
+        Representer::CategoriesList.new(OpenStruct.new)
+          .from_json(input[:categories_json])
+          .then do |categories|
+            input[:categories] = categories
+            Success(input)
+          end
       rescue StandardError
         Failure('Could not parse response from API')
       end

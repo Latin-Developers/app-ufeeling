@@ -28,6 +28,10 @@ module UFeeling
         @request.get_video(video_id)
       end
 
+      def category_list
+        @request.get_categories
+      end
+
       # TODO: get_comments
       # TODO get_sentiment_summary
       # TODO get_sentiment_trend
@@ -54,6 +58,10 @@ module UFeeling
 
         def add_video(video_id)
           call_api('post', ['videos', video_id])
+        end
+
+        def get_categories
+          call_api('get', ['categories'])
         end
 
         # TODO: get_comments
