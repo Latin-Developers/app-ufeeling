@@ -18,7 +18,7 @@ module UFeeling
 
         # Use in tests to create a WatchedList object from a list
         def self.to_request(list)
-          WatchedList.new('video_ids' => to_encoded(list))
+          WatchedList.new('video_ids', 'categories' => to_encoded(list))
         end
       end
     end

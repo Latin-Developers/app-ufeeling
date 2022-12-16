@@ -42,7 +42,6 @@ module UFeeling
           viewable_videos = []
         else
           videos = result.value![:videos].videos
-          categories = result.value![:categories].categories
           flash.now[:notice] = 'Add a Youtube video to get started' if videos.none?
 
           # session[:watching] = videos.map(&:origin_id)
@@ -50,6 +49,14 @@ module UFeeling
         end
 
         view 'home', locals: { videos: viewable_videos }
+
+        # Intenté pero no funcionó ):
+
+        # result = Services::HomePage.new.call(categories_json:)
+        # categories = result.value![:categories].categories
+        # viewable_categories = Views::CategoryList.new(categories)
+
+        # view 'home', locals: { categories: viewable_categories }
       end
 
       # [...] /videos/

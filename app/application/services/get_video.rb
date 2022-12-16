@@ -10,7 +10,7 @@ module UFeeling
 
       step :get_video
       step :format_video
-      step :get_comments
+      #step :get_comments
       # TODO: step :format_comments
       # TODO: step :get_summary
       # TODO: step :format_summary
@@ -34,14 +34,14 @@ module UFeeling
         Failure('Could not parse response from API')
       end
 
-      def get_comments(input)
-        result = UFeeling::Gateway::Api.new(UFeeling::App.config)
-          .get_comments(input[:video_id])
+      # def get_comments(input)
+      # result = UFeeling::Gateway::Api.new(UFeeling::App.config)
+      #  .get_comments(input[:video_id])
 
-        result.success? ? Success(result.payload) : Failure(result.message)
-      rescue StandardError
-        Failure('Could not obtain comments')
-      end
+      # result.success? ? Success(result.payload) : Failure(result.message)
+      # rescue StandardError
+      # Failure('Could not obtain comments')
+      # end
     end
   end
 end
