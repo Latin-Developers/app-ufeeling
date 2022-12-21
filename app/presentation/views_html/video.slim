@@ -5,5 +5,11 @@ br
 .row
   .description Description: 
   .description-value = video_info.video_description
+
+.row
+  - video_info.comments.each do |comment|
+    .comments_display
+      = comment.text_display
+
        
           

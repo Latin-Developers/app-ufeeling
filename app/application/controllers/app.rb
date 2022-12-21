@@ -91,7 +91,8 @@ module UFeeling
                 routing.redirect '/'
               end
 
-              video_info = Views::VideoInfo.new(video_result.value!, [])
+              video_info = Views::VideoInfo.new(video_result.value![:video], video_result.value![:comments].comments)
+              puts video_info.comments
 
               # Setting Cache headers for Proxy and Browser
               # ? Deberiamos crear un helper para dejar el(los) tiempo(s) de Cache en una constante?
