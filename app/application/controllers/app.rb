@@ -48,15 +48,14 @@ module UFeeling
           viewable_videos = Views::VideoList.new(videos)
         end
 
-        view 'home', locals: { videos: viewable_videos }
+        # Categories
 
-        # Intenté pero no funcionó ):
+        categories = result.value![:categories].categories
 
-        # result = Services::HomePage.new.call(categories_json:)
-        # categories = result.value![:categories].categories
-        # viewable_categories = Views::CategoryList.new(categories)
+        viewable_categories = Views::CategoryList.new(categories)
+        puts viewable_categories
 
-        # view 'home', locals: { categories: viewable_categories }
+        view 'home', locals: { videos: viewable_videos, categories: viewable_categories }
       end
 
       # [...] /videos/
