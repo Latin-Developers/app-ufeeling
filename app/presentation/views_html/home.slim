@@ -44,12 +44,8 @@
     .subtitle Analysis you may be interested in:
 
     #myBtnContainer
-      button class="btn btn-outline-primary" onclick="filterSelection('reviews')"  Reviews 
-      button class="btn btn-outline-primary" onclick="filterSelection('animation')"  Animation
-      button class="btn btn-outline-primary" onclick="filterSelection('history')"  History
-      button class="btn btn-outline-primary" onclick="filterSelection('tutorials')"  Tutorials
-      button class="btn btn-outline-primary" onclick="filterSelection('sports')"  Sports
-      button class="btn btn-outline-primary" onclick="filterSelection('videogames')"  Videogames
+      - categories.each do |category|
+        button class="btn btn-outline-primary" onclick="filterSelection('#{category.origin_id}')"  #{category.category_title} 
 
       .blank-row
   
