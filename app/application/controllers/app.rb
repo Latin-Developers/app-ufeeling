@@ -48,15 +48,14 @@ module UFeeling
           viewable_videos = Views::VideoList.new(videos)
         end
 
-        view 'home', locals: { videos: viewable_videos }
+        # Categories
 
-        # Intenté pero no funcionó ):
+        categories = result.value![:categories].categories
 
-        # result = Services::HomePage.new.call(categories_json:)
-        # categories = result.value![:categories].categories
-        # viewable_categories = Views::CategoryList.new(categories)
+        viewable_categories = Views::CategoryList.new(categories)
+        puts viewable_categories
 
-        # view 'home', locals: { categories: viewable_categories }
+        view 'home', locals: { videos: viewable_videos, categories: viewable_categories }
       end
 
       # [...] /videos/
@@ -92,7 +91,8 @@ module UFeeling
                 routing.redirect '/'
               end
 
-              video_info = Views::VideoInfo.new(video_result.value!, [])
+              video_info = Views::VideoInfo.new(video_result.value![:video], video_result.value![:comments].comments)
+              puts video_info.comments
 
               # Setting Cache headers for Proxy and Browser
               # ? Deberiamos crear un helper para dejar el(los) tiempo(s) de Cache en una constante?

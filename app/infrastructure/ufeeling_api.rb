@@ -32,8 +32,11 @@ module UFeeling
         @request.get_categories
       end
 
-      # TODO: get_comments
-      # TODO get_sentiment_summary
+      def comments_list(video_id)
+        @request.get_comments(video_id)
+      end
+
+      # TODO: get_sentiment_summary
       # TODO get_sentiment_trend
 
       # HTTP request transmitter
@@ -64,8 +67,10 @@ module UFeeling
           call_api('get', ['categories'])
         end
 
-        # TODO: get_comments
-        # TODO get_sentiment_summary
+        def get_comments(video_id)
+          call_api('get', ['videos', video_id, 'comments'])
+        end
+        # TODO: get_sentiment_summary
         # TODO get_sentiment_trend
 
         private

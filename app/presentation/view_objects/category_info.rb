@@ -3,8 +3,9 @@
 module Views
   # View for a single video entity
   class CategoryInfo
-    def initialize(category, _index = nil)
+    def initialize(category, index = nil)
       @category = category
+      @index = index
     end
 
     attr_reader :category
