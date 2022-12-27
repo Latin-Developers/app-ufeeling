@@ -14,6 +14,13 @@ html
     / link rel='stylesheet' href='/presentation/assets/css/style.css'
     == assets(:css)
   body
+    / JQuery
+    script{ 
+      src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+      integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" 
+      crossorigin="anonymous" 
+    }
+
     / Popper
     script{ 
       src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
@@ -23,6 +30,12 @@ html
     / Bootstrap
     script{
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
+      crossorigin="anonymous"
+    }
+
+    / FontAwesome
+    script{
+      src="https://kit.fontawesome.com/7d6f93cf88.js"
       crossorigin="anonymous"
     }
 
