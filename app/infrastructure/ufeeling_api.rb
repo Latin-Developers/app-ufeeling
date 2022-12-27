@@ -29,7 +29,7 @@ module UFeeling
       end
 
       def category_list
-        @request.get_categories
+        @request.obtain_categories
       end
 
       def comments_list(video_id)
@@ -63,7 +63,7 @@ module UFeeling
           call_api('post', ['videos', video_id])
         end
 
-        def get_categories
+        def obtain_categories
           call_api('get', ['categories'])
         end
 

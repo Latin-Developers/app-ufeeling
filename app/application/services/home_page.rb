@@ -49,7 +49,7 @@ module UFeeling
       end
 
       def format_categories(input)
-        Representer::CategoriesList.new(OpenStruct.new)
+        Representer::CategoriesList.new(OpenStruct.new) # rubocop:disable Style/OpenStructUse
           .from_json(input[:categories_json])
           .then do |categories|
             input[:categories] = categories
