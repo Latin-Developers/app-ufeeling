@@ -107,12 +107,6 @@ module UFeeling
                 end
               end
 
-              # Setting Cache headers for Proxy and Browser
-              # ? Deberiamos crear un helper para dejar el(los) tiempo(s) de Cache en una constante?
-              App.configure :production do
-                response.expires 120, public: true
-              end
-
               processing = Views::VideoProcessing.new(
                 App.config, analize.processing, video_origin_id
               )
