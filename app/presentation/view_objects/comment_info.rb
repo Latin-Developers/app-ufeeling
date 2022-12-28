@@ -14,8 +14,8 @@ module Views
       @comment[:origin_id]
     end
 
-    def text_display
-      @comment[:text_display]
+    def text_original
+      @comment[:text_original]
     end
 
     def total_reply_count
