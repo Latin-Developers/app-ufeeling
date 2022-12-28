@@ -65,10 +65,10 @@ module UFeeling
 
       def format_comments(input)
         unless input[:processing]
-          Representer::CommentsList.new(OpenStruct.new).from_json(input[:comments_json]) # rubocop:disable Style/OpenStructUse
+          Representer::CommentsList.new(OpenStruct.new) # rubocop:disable Style/OpenStructUse
+            .from_json(input[:comments_json])
             .then do |comments|
               input[:comments] = comments
-              Success(input)
             end
         end
 

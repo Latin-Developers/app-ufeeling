@@ -47,7 +47,10 @@
   .row
     - video_info.comments.each do |comment|
       .comments_display
-        = comment.text_original
+        br
+        = "#{comment.published_info.year}-#{comment.published_info.month}-#{comment.published_info.day}: #{comment.sentiment.sentiment_name} - #{comment.sentiment.sentiment_score}"
+        br
+        = "- #{comment.text_original}"
 
         
             
