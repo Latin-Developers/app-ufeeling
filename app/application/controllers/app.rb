@@ -3,6 +3,7 @@
 require 'roda'
 require 'slim'
 require 'slim/include'
+require 'gchart'
 
 module UFeeling
   # Web App
@@ -31,31 +32,24 @@ module UFeeling
       routing.root do
         # Get cookie viewer's previously seen videos
         session[:watching] ||= []
-
-        # Load previously searched videos
-        # videos = UFeeling::Videos::Repository::For.klass(UFeeling::Videos::Entity::Video)
-        # .find_ids(session[:watching])
-        result = Services::HomePage.new.call(video_ids: session[:watching])
+        category_selected = routing.params['category']
+        result = Services::HomePage.new.call(video_ids: session[:watching], category_selected:)
 
         if result.failure?
           flash[:error] = result.failure
-          viewable_videos = []
+          videos = []
         else
           videos = result.value![:videos].videos
+          categories = result.value![:categories].categories
+          videos_by_category = result.value![:videos_by_category].videos
           flash.now[:notice] = 'Add a Youtube video to get started' if videos.none?
 
-          # session[:watching] = videos.map(&:origin_id)
-          viewable_videos = Views::VideoList.new(videos)
+          session[:watching] = videos.map(&:origin_id)
         end
 
-        # Categories
+        home_info = Views::HomeInfo.new(videos, categories, videos_by_category, category_selected)
 
-        categories = result.value![:categories].categories
-
-        viewable_categories = Views::CategoryList.new(categories)
-        puts viewable_categories
-
-        view 'home', locals: { videos: viewable_videos, categories: viewable_categories }
+        view 'home', locals: { info: home_info }
       end
 
       # [...] /videos/
@@ -107,12 +101,22 @@ module UFeeling
                 end
               end
 
+              bar_chart = Gchart.line(
+                title: 'Title for GChart',
+                bg: '000',
+                legend: ['first data set label'],
+                data: [10, 30, 120, 45, 72],
+                axis_labels: [%w[J F M A M]],
+                axis_with_labels: %w[x y],
+                axis_range: [nil, [2, 17, 5]]
+              )
+
               processing = Views::VideoProcessing.new(
                 App.config, analize.processing, video_origin_id
               )
 
               # Show viewer the video
-              view 'video', locals: { video_info:, processing: }
+              view 'video', locals: { video_info:, processing:, bar_chart: }
             end
           end
 

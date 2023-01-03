@@ -16,5 +16,9 @@ module Views
     def any?
       @categories.any?
     end
+
+    def first
+      @categories.first
+    end
   end
 end

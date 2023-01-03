@@ -12,6 +12,7 @@ gem 'slim', '~> 4.1'
 
 # APPLICATION LAYER
 # Web application related
+gem 'googlecharts', '~> 1.6', '>= 1.6.12'
 gem 'puma', '~> 6.0'
 gem 'rack-session', '~> 0.3'
 gem 'roda', '~> 3.62'

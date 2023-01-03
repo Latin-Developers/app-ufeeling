@@ -16,8 +16,8 @@ module UFeeling
         @request.get_root.success?
       end
 
-      def video_list(video_ids)
-        @request.video_list(video_ids)
+      def video_list(video_ids, categories)
+        @request.video_list(video_ids, categories)
       end
 
       def add_video(video_id)
@@ -50,9 +50,10 @@ module UFeeling
           call_api('get')
         end
 
-        def video_list(video_ids)
+        def video_list(video_ids, categories)
           call_api('get', ['videos'],
-                   'video_ids' => Value::WatchedList.to_encoded(video_ids))
+                   'video_ids'  => Value::WatchedList.to_encoded(video_ids),
+                   'categories' => Value::WatchedList.to_encoded(categories))
         end
 
         def get_video(video_id)

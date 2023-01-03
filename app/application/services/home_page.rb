@@ -12,28 +12,33 @@ module UFeeling
       step :format_previous_videos
       step :get_categories
       step :format_categories
-      # TODO: step :get_videos_by_category
-      # TODO: step :format_videos_by_category
+      step :obtain_video_by_category
+      step :format_previous_videos_by_category
 
       private
 
       def get_previous_videos(input)
         if input[:video_ids].size.zero?
-          Success('{"videos": []}')
+          input[:videos_json] = '{"videos": []}'
+          Success(input)
         else
-          UFeeling::Gateway::Api.new(UFeeling::App.config).video_list(input[:video_ids])
+          UFeeling::Gateway::Api.new(UFeeling::App.config).video_list(input[:video_ids], [])
             .then do |result|
-              result.success? ? Success(result.payload) : Failure(result.message)
+              input[:videos_json] = result.payload
+              result.success? ? Success(input) : Failure(result.message)
             end
         end
       rescue StandardError
-        Failure('Could not access our API')
+        Failure('Could not access the API')
       end
 
-      def format_previous_videos(videos_json)
+      def format_previous_videos(input)
         Representer::VideosList.new(OpenStruct.new) # rubocop:disable Style/OpenStructUse
-          .from_json(videos_json)
-          .then { |videos| Success(videos:) }
+          .from_json(input[:videos_json])
+          .then do |videos|
+            input[:videos] = videos
+            Success(input)
+          end
       rescue StandardError
         Failure('Could not parse response from API')
       end
@@ -53,6 +58,32 @@ module UFeeling
           .from_json(input[:categories_json])
           .then do |categories|
             input[:categories] = categories
+            Success(input)
+          end
+      rescue StandardError
+        Failure('Could not parse response from API')
+      end
+
+      def obtain_video_by_category(input)
+        if input[:category_selected]
+          UFeeling::Gateway::Api.new(UFeeling::App.config).video_list([], [input[:category_selected]])
+            .then do |result|
+              input[:videos_by_category_json] = result.payload
+              result.success? ? Success(input) : Failure(result.message)
+            end
+        else
+          input[:videos_by_category_json] = '{"videos": []}'
+          Success(input)
+        end
+      rescue StandardError
+        Failure('Could not access the API')
+      end
+
+      def format_previous_videos_by_category(input)
+        Representer::VideosList.new(OpenStruct.new) # rubocop:disable Style/OpenStructUse
+          .from_json(input[:videos_by_category_json])
+          .then do |videos_by_category|
+            input[:videos_by_category] = videos_by_category
             Success(input)
           end
       rescue StandardError

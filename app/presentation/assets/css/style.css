@@ -11,6 +11,11 @@ h1 {
   font-size: 65px;
 }
 
+.text-underline-hover:hover {
+  text-decoration: none;
+  color: #ffffff;
+}
+
 .top-buffer {
   margin-top: 40px;
 }
