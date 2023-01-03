@@ -38,20 +38,20 @@
         }
       });
   -  else
-  .row
-    .title Title: 
-    .title-value = video_info.video_title
-  br
-  .row
-    .description Description: 
-    .description-value = video_info.video_description
+    .row
+      .title Title: 
+      .title-value = video_info.video_title
+    br
+    .row
+      .description Description: 
+      .description-value = video_info.video_description
 
-  .row
-    - video_info.comments.each do |comment|
-      .comments_display
-        br
-        = "#{comment.published_info.year}-#{comment.published_info.month}-#{comment.published_info.day}: #{comment.sentiment.sentiment_name} - #{comment.sentiment.sentiment_score}"
-        br
-        = "- #{comment.text_original}"
+    .row
+      - video_info.comments.each do |comment|
+        .comments_display
+          br
+          = "#{comment.published_info.year}-#{comment.published_info.month}-#{comment.published_info.day}: #{comment.sentiment.sentiment_name} - #{comment.sentiment.sentiment_score}"
+          br
+          = "- #{comment.text_original}"
 
         

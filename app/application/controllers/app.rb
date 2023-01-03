@@ -42,7 +42,7 @@ module UFeeling
           videos = result.value![:videos].videos
           categories = result.value![:categories].categories
           videos_by_category = result.value![:videos_by_category].videos
-          flash.now[:notice] = 'Add a Youtube video to get started' if videos.none?
+          # flash.now[:notice] = 'Add a Youtube video to get started' if videos.none?
 
           session[:watching] = videos.map(&:origin_id)
         end
@@ -67,7 +67,7 @@ module UFeeling
 
             video = new_video.value!
             session[:watching].insert(0, video.origin_id).uniq!
-            flash[:notice] = 'New video added'
+            flash[:notice] = 'Video under analysis'
             routing.redirect "videos/#{video.origin_id}"
           end
         end

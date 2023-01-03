@@ -1,11 +1,13 @@
+body {
+  padding-bottom: 50px;
+}
 h1 {
   font-weight: 100;
-  background-color: #1984c5;
   text-decoration: none;
 }
 
 .text-underline-hover {
-  font-weight: 100;
+  font-weight: bold;
   text-decoration: none;
   color: #ffffff;
   font-size: 65px;
@@ -14,6 +16,10 @@ h1 {
 .text-underline-hover:hover {
   text-decoration: none;
   color: #ffffff;
+}
+
+#show-video-submit {
+  width: 100%;
 }
 
 .top-buffer {
@@ -30,12 +36,12 @@ h1 {
 
 .subtitle {
   font-size: 35px;
-  color: #0d6094;
+  color: #ffff;
 }
 
 .video_desc {
   font-size: 14px;
-  color: #000000;
+  color: #ffffff;
   word-break: break-word;
 }
 
@@ -88,21 +94,21 @@ h1 {
 }
 
 .query-bar {
-  background-color: #1984c5;
   color: #ffffff;
   font-size: 17px;
   padding: 5px 5px 5px 5px;
 }
 
 .query-bar2 {
-  background-color: #ffffff;
+  display: flex;
+  justify-content: end;
+  align-items: center;
+  justify-items: center;
   color: #ffffff;
-  font-size: 17px;
   padding: 5px 5px 5px 5px;
 }
 
 .query-bar-previews {
-  background-color: #c54a19;
   color: #ffffff;
   font-size: 17px;
   padding: 5px 5px 5px 5px;
@@ -110,7 +116,6 @@ h1 {
 
 .filterDiv {
   float: left;
-  background-color: #2196f3;
   color: #ffffff;
   width: 100px;
   line-height: 100px;
@@ -120,7 +125,21 @@ h1 {
 }
 
 footer {
-  padding: 0in;
+  bottom: 0;
+  width: 100%;
+  padding: 10px 5px;
   font-size: 11px;
-  color: rgb(41, 41, 41);
+  color: #ffffff;
+  background-color: #0f2437;
+  position: fixed;
+}
+
+.fa-face-smile-beam {
+  color: #5cb85c;
+  font-size: 30px;
+}
+
+.fa-face-frown {
+  color: red;
+  font-size: 30px;
 }

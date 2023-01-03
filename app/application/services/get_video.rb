@@ -8,7 +8,6 @@ module UFeeling
     class GetVideo
       include Dry::Transaction
 
-      step :validate_video
       step :get_video
       step :format_video
       step :get_comments
@@ -18,13 +17,13 @@ module UFeeling
 
       private
 
-      def validate_video(input)
-        if input[:watched_list].include? input[:video_id]
-          Success(input)
-        else
-          Failure('Please first request this video to be added to your list')
-        end
-      end
+      # def validate_video(input)
+      #   if input[:watched_list].include? input[:video_id]
+      #     Success(input)
+      #   else
+      #     Failure('Please first request this video to be added to your list')
+      #   end
+      # end
 
       def get_video(input)
         result = UFeeling::Gateway::Api.new(UFeeling::App.config)
