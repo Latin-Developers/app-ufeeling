@@ -13,6 +13,14 @@ module Views
       @videos.each(&)
     end
 
+    def each_withouth(filter_ids, &)
+      @videos.reject { |video| filter_ids.include?(video.origin_id) }.each(&)
+    end
+
+    def ids
+      @videos.map(&:origin_id)
+    end
+
     def any?
       @videos.any?
     end

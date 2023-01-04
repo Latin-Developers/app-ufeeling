@@ -9,6 +9,7 @@ module Views
     def initialize(viewed_videos, categories, videos_by_categories, category_selected)
       @viewed_videos = VideoList.new(viewed_videos)
       @videos_by_categories = VideoList.new(videos_by_categories)
+      categories.insert(0, { title: 'All' })
       @categories = CategoryList.new(categories)
       @category_selected = category_selected
     end

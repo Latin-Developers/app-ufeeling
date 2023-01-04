@@ -65,16 +65,12 @@ module UFeeling
       end
 
       def obtain_video_by_category(input)
-        if input[:category_selected]
-          UFeeling::Gateway::Api.new(UFeeling::App.config).video_list([], [input[:category_selected]])
-            .then do |result|
-              input[:videos_by_category_json] = result.payload
-              result.success? ? Success(input) : Failure(result.message)
-            end
-        else
-          input[:videos_by_category_json] = '{"videos": []}'
-          Success(input)
-        end
+        categories = input[:category_selected] ? [input[:category_selected]] : []
+        UFeeling::Gateway::Api.new(UFeeling::App.config).video_list([], categories)
+          .then do |result|
+            input[:videos_by_category_json] = result.payload
+            result.success? ? Success(input) : Failure(result.message)
+          end
       rescue StandardError
         Failure('Could not access the API')
       end

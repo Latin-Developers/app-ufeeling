@@ -40,9 +40,18 @@ h1 {
 }
 
 .video_desc {
-  font-size: 14px;
+  font-size: 0.8rem;
   color: #ffffff;
   word-break: break-word;
+  line-height: 1.3rem;
+  font-weight: 500;
+  height: 2.6rem;
+  overflow: hidden;
+  -webkit-line-clamp: 2;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  text-overflow: ellipsis;
+  white-space: normal;
 }
 
 .project.owner {
@@ -84,19 +93,16 @@ h1 {
 .video_img1 {
   width: 100%;
   grid-column: 1;
-  margin-right: 15px;
 }
 
 .video_img2 {
   height: 35px;
   grid-column: 1;
-  margin-right: 15px;
 }
 
 .query-bar {
   color: #ffffff;
   font-size: 17px;
-  padding: 5px 5px 5px 5px;
 }
 
 .query-bar2 {

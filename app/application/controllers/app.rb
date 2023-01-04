@@ -33,6 +33,7 @@ module UFeeling
         # Get cookie viewer's previously seen videos
         session[:watching] ||= []
         category_selected = routing.params['category']
+        category_selected = nil if category_selected.nil? || category_selected.empty?
         result = Services::HomePage.new.call(video_ids: session[:watching], category_selected:)
 
         if result.failure?
