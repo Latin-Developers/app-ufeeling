@@ -17,23 +17,23 @@ form role="form" action="/videos" method='POST' id='show-video'
   - if info.viewed_videos.any?
     .row
       .col-md-12.col-sm-3.blank-row
-      .subtitle My videos:
+      h2.subtitle My videos:
 
     .row
       - info.viewed_videos.each do |video|
         .col-lg-3.col-md-4.col-sm-6.col-xs-12.pb-4
           img class = "video_img1" src="#{video.video_image}"
-          .video_desc
+          .video-desc
             = video.video_title
           .query-bar2
-            i class="fa-solid fa-face-smile-beam mx-2"
+            i.fa-solid.fa-face-smile-beam.text-success.me-2
             a href="videos/#{video.origin_id}" class="btn btn-secondary" View
 
   
   - if info.categories.any?
     .row
       .col-md-12.col-sm-3.blank-row-half
-      .subtitle Other videos you might like:
+      h2.subtitle Other videos you might like:
 
     #myBtnContainer
       - info.categories.each do |category|
@@ -47,8 +47,8 @@ form role="form" action="/videos" method='POST' id='show-video'
         .col-lg-3.col-md-4.col-sm-6.col-xs-12.pb-4
 
           img class = "video_img1" src="#{video.video_image}"
-          .video_desc 
+          .video-desc 
             = video.video_title
           .query-bar2
-            i class="fa-solid fa-face-frown mx-2"
+            i.fa-solid.fa-face-frown.text-danger.me-2
             a href="videos/#{video.origin_id}" class="btn btn-secondary" View

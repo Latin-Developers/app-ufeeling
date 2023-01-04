@@ -22,6 +22,18 @@ module Views
       @comment[:total_reply_count]
     end
 
+    def positive?
+      sentiment.sentiment_name == 'positive'
+    end
+
+    def neutral?
+      sentiment.sentiment_name == 'neutral'
+    end
+
+    def negative?
+      sentiment.sentiment_name == 'negative'
+    end
+
     def sentiment
       @comment[:sentiment]
     end

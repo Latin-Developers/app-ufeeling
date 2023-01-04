@@ -104,8 +104,11 @@ module UFeeling
 
               bar_chart = Gchart.line(
                 title: 'Title for GChart',
-                bg: '000',
-                legend: ['first data set label'],
+                title_color: 'FF0000',
+                bg: '0f2437',
+                size: '350x350',
+                legend: ['test'],
+                line_colors: 'ffffff',
                 data: [10, 30, 120, 45, 72],
                 axis_labels: [%w[J F M A M]],
                 axis_with_labels: %w[x y],

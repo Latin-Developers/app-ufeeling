@@ -1,11 +1,13 @@
 # frozen_string_literal: true
 
+require_relative 'comment_list'
+
 module Views
   # View for a single video entity
   class VideoInfo
     def initialize(video, comments, index = nil)
       @video = video
-      @comments = comments
+      @comments = CommentList.new(comments)
       @index = index
     end
 
