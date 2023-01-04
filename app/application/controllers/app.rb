@@ -3,7 +3,6 @@
 require 'roda'
 require 'slim'
 require 'slim/include'
-require 'gchart'
 
 module UFeeling
   # Web App
@@ -102,25 +101,12 @@ module UFeeling
                 end
               end
 
-              bar_chart = Gchart.line(
-                title: 'Title for GChart',
-                title_color: 'FF0000',
-                bg: '0f2437',
-                size: '350x350',
-                legend: ['test'],
-                line_colors: 'ffffff',
-                data: [10, 30, 120, 45, 72],
-                axis_labels: [%w[J F M A M]],
-                axis_with_labels: %w[x y],
-                axis_range: [nil, [2, 17, 5]]
-              )
-
               processing = Views::VideoProcessing.new(
                 App.config, analize.processing, video_origin_id
               )
 
               # Show viewer the video
-              view 'video', locals: { video_info:, processing:, bar_chart: }
+              view 'video', locals: { video_info:, processing: }
             end
           end
 

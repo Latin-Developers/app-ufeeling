@@ -13,6 +13,18 @@ module Views
       @comments.each(&)
     end
 
+    def positive_count
+      @comments.select(&:positive?).size
+    end
+
+    def neutral_count
+      @comments.select(&:neutral?).size
+    end
+
+    def negative_count
+      @comments.select(&:negative?).size
+    end
+
     def any?
       @comments.any?
     end
