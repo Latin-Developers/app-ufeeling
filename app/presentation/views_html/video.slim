@@ -48,14 +48,18 @@
   .comments.mt-4
     - video_info.comments.each do |comment|
       .row
-        .col-auto
+        .col-auto.pt-1
           - if comment.positive?
             i.fa-solid.fa-face-smile-beam.text-success
           - if comment.neutral?
             i.fa-solid.fa-face-meh-blank.text-warning
           - if comment.negative?
             i.fa-solid.fa-face-frown.text-danger
-        .col
+        .col.mb-2
+          .comment-info 
+            = comment.published_date 
+            = " - "
+            = comment.author_name
           = comment.text_original
 
           

@@ -8,8 +8,6 @@ module Views
       @index = index
     end
 
-    attr_reader :comment
-
     def origin_id
       @comment[:origin_id]
     end
@@ -34,12 +32,29 @@ module Views
       sentiment.sentiment_name == 'negative'
     end
 
+    def published_date
+      year = published_info.year.to_s.rjust(4, '0')
+      month = published_info.month.to_s.rjust(2, '0')
+      day = published_info.day.to_s.rjust(2, '0')
+      "#{year}-#{month}-#{day}"
+    end
+
+    def author_name
+      author.name
+    end
+
+    private
+
     def sentiment
       @comment[:sentiment]
     end
 
+    def author
+      @comment[:author]
+    end
+
     def published_info
-      @comment[:published_info]
+      @comment.published_info
     end
   end
 end

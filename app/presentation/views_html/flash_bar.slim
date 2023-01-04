@@ -1,6 +1,9 @@
 - if flash[:error]
-  div class="alert alert-danger" id="flash_bar_danger"
-    = flash[:error]
+  .alert.alert-dismissible.alert-danger#flash_bar_danger
+    button.btn-close data-bs-dismiss="alert" type="button" aria-label="Close"
+    strong = flash[:error]
+
 - if flash[:notice]
-  div class="alert alert-success" id="flash_bar_success"
-    = flash[:notice]
+  .alert.alert-dismissible.alert-success#flash_bar_success
+    button.btn-close data-bs-dismiss="alert" type="button" aria-label="Close"
+    strong = flash[:notice]
