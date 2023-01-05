@@ -135,7 +135,7 @@ footer {
   padding: 10px 5px;
   font-size: 11px;
   color: #ffffff;
-  background-color: #0f2437;
+  background-color: #0f2537;
   position: fixed;
 }
 
@@ -160,10 +160,12 @@ footer {
 .comment-info {
   font-size: 0.8rem;
   color: #bbbbbb;
+  display: flex;
+  align-items: center;
 }
 
 .highcharts-background {
-  fill: #0f2437;
+  fill: #0f2537;
 }
 
 .highcharts-title {

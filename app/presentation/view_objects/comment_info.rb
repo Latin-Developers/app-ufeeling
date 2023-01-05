@@ -43,6 +43,14 @@ module Views
       author.name
     end
 
+    def language_name
+      language.language_name
+    end
+
+    def language_code
+      language.language_code
+    end
+
     private
 
     def sentiment
@@ -55,6 +63,10 @@ module Views
 
     def published_info
       @comment.published_info
+    end
+
+    def language
+      @comment[:language]
     end
   end
 end

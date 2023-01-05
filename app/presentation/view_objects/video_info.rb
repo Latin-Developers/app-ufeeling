@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 require_relative 'comment_list'
-require 'gchart'
 
 module Views
   # View for a single video entity
@@ -35,6 +34,27 @@ module Views
 
     def origin_id
       @video[:origin_id]
+    end
+
+    def published_date
+      year = published_info.year.to_s.rjust(4, '0')
+      month = published_info.month.to_s.rjust(2, '0')
+      day = published_info.day.to_s.rjust(2, '0')
+      "#{year}-#{month}-#{day}"
+    end
+
+    def author_name
+      author.name
+    end
+
+    private
+
+    def author
+      @video[:author]
+    end
+
+    def published_info
+      @video.published_info
     end
   end
 end

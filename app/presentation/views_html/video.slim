@@ -36,10 +36,51 @@
     });
 -  else
   .row.align-items-center
+    .col-12
+      h3.title.mb-0
+        = video_info.video_title
+      span
+        = video_info.published_date 
+        = " - "
+        = video_info.author_name
+        
     .col-12.col-md-7.col-lg-7.col-xl-6
       iframe width="100%" height="350" src="https://www.youtube.com/embed/#{video_info.origin_id}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen
     .col-12.col-md-5.col-lg-5.col-xl.6.text-center
       #container
+
+  hr
+
+  .comments.mt-4
+    h4 
+      = "Comments"
+      i.fa-solid.fa-rotate.text-primary.ms-2
+
+    a class="btn m-1 btn-primary" href="/"  All
+    a class="btn m-1 btn-outline-primary" href="/"  Positive
+    a class="btn m-1 btn-outline-primary" href="/"  Neutral 
+    a class="btn m-1 btn-outline-primary" href="/"  Positive
+
+    - video_info.comments.each do |comment|
+      .row.mb-4.mt-2
+        .col-auto.pt-1
+          - if comment.positive?
+            i.fa-solid.fa-face-smile-beam.text-success
+          - if comment.neutral?
+            i.fa-solid.fa-face-meh-blank.text-warning
+          - if comment.negative?
+            i.fa-solid.fa-face-frown.text-danger
+        .col
+          .comment-info
+            span
+              = comment.published_date 
+              = " - "
+              = comment.author_name
+            img.ms-1 height="15" alt="#{comment.language_name}" src="https://www.unknown.nu/flags/images/#{comment.language_code}-100"
+            span.ms-1
+              = " - "
+              = comment.language_name
+          = comment.text_original
 
   javascript: 
     var pieColors = ["#5db85b", "#ffc008", "#d9534f"];
@@ -47,7 +88,7 @@
     // Build the chart
     Highcharts.chart('container', {
       chart: {
-        plotBackgroundColor: "#0f2437",
+        plotBackgroundColor: "#0f2537",
         type: 'pie'
       },
       title: {
@@ -82,26 +123,5 @@
       }]
     });
   
+
   
-  .row
-    h2.title
-      = video_info.video_title
-
-  .comments.mt-4
-    - video_info.comments.each do |comment|
-      .row
-        .col-auto.pt-1
-          - if comment.positive?
-            i.fa-solid.fa-face-smile-beam.text-success
-          - if comment.neutral?
-            i.fa-solid.fa-face-meh-blank.text-warning
-          - if comment.negative?
-            i.fa-solid.fa-face-frown.text-danger
-        .col.mb-2
-          .comment-info 
-            = comment.published_date 
-            = " - "
-            = comment.author_name
-          = comment.text_original
-
-          
