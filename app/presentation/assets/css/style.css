@@ -161,3 +161,12 @@ footer {
   font-size: 0.8rem;
   color: #bbbbbb;
 }
+
+.highcharts-background {
+  fill: #0f2437;
+}
+
+.highcharts-title {
+  color: #ffffff !important;
+  fill: #ffffff !important;
+}

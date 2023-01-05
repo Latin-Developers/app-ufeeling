@@ -15,14 +15,10 @@ module Views
     attr_reader :video, :comments
 
     def comments_summary
-      Gchart.pie(
-        title: 'Comments Summary by Sentiment',
-        title_text_style: { color: 'ffffff' },
-        labels: %w[Positive Neutral Negative],
-        bar_colors: %w[5db85b ffc008 d9534f],
-        bg: '0f2437',
-        data: [@comments.positive_count, @comments.neutral_count, @comments.negative_count]
-      )
+      { title: 'Comments Summary by Sentiment',
+        positive_count: @comments.positive_count,
+        neutral_count: @comments.neutral_count,
+        negative_count: @comments.negative_count }
     end
 
     def video_image
