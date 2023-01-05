@@ -16,8 +16,8 @@ module UFeeling
 
       def parse_url(input)
         if input.success?
-          includes_other_params = input[:video_url].include? '&'
-          video_id = includes_other_params ? input[:video_url].split('=')[-2] : input[:video_url].split('=')[-1]
+          mobile_url = input[:video_url].include?('https://youtu.be/')
+          video_id = mobile_url ? video_id_mobile_url(input[:video_url]) : video_id_desktop_url(input[:video_url])
           Success(video_id:)
         else
           Failure("URL #{input.errors.messages.first}")
@@ -41,6 +41,15 @@ module UFeeling
           .then { |video| Success(video) }
       rescue StandardError
         Failure('Error in the video -- please try again')
+      end
+
+      def video_id_mobile_url(video_url)
+        video_url.split('?')[0].split('/')[-1]
+      end
+
+      def video_id_desktop_url(video_url)
+        includes_other_params = video_url.include? '&'
+        includes_other_params ? video_url.split('=')[-2] : video_url.split('=')[-1]
       end
     end
   end
