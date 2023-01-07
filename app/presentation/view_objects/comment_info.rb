@@ -51,8 +51,20 @@ module Views
       language.language_name
     end
 
+    def tradicional_chinese?
+      language_code == 'zh-TW'
+    end
+
     def language_code
       language.language_code
+    end
+
+    def language_img
+      if tradicional_chinese?
+        'https://upload.wikimedia.org/wikipedia/commons/4/4d/Animated-Flag-Taiwan.gif'
+      else
+        "https://www.unknown.nu/flags/images/#{language_code}-100"
+      end
     end
 
     private

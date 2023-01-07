@@ -101,8 +101,8 @@ module UFeeling
                 flash.now[:notice] = 'The video is under analisis'
               else
                 video_info = Views::VideoInfo.new(video_result.value![:video],
-                                                  video_result.value![:comments]&.comments,
-                                                  video_result.value![:sentiments]&.sentiments,
+                                                  video_result.value![:comments]&.comments || [],
+                                                  video_result.value![:sentiments]&.sentiments || [],
                                                   sentiment_selected)
 
                 # Only use browser caching in production
