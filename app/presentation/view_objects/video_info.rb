@@ -72,6 +72,22 @@ module Views
       "/videos/#{origin_id}?sentiment=#{sentiment_id}"
     end
 
+    def positive?
+      sentiment.sentiment_name == 'positive'
+    end
+
+    def neutral?
+      sentiment.sentiment_name == 'neutral'
+    end
+
+    def negative?
+      sentiment.sentiment_name == 'negative'
+    end
+
+    def mixed?
+      sentiment.sentiment_name == 'mixed'
+    end
+
     private
 
     def author
@@ -80,6 +96,10 @@ module Views
 
     def published_info
       @video.published_info
+    end
+
+    def sentiment
+      @video[:sentiment]
     end
   end
 end

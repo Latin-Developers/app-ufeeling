@@ -26,7 +26,14 @@ form role="form" action="/videos" method='POST' id='show-video'
           .video-desc
             = video.video_title
           .query-bar2
-            i.fa-solid.fa-face-smile-beam.text-success.me-2
+            - if video.positive?
+              i.me-2.fa-solid.fa-face-smile-beam.text-success
+            - if video.neutral?
+              i.me-2.fa-solid.fa-face-meh-blank.text-secondary
+            - if video.negative?
+              i.me-2.fa-solid.fa-face-frown.text-danger
+            - if video.mixed?
+              i.me-2.fa-solid.fa-face-grimace.text-warning
             a href="videos/#{video.origin_id}" class="btn btn-secondary" View
 
   
@@ -50,5 +57,14 @@ form role="form" action="/videos" method='POST' id='show-video'
           .video-desc 
             = video.video_title
           .query-bar2
-            i.fa-solid.fa-face-frown.text-danger.me-2
+            - if video.positive?
+              i.me-2.fa-solid.fa-face-smile-beam.text-success
+            - elsif video.neutral?
+              i.me-2.fa-solid.fa-face-meh-blank.text-secondary
+            - elsif video.negative?
+              i.me-2.fa-solid.fa-face-frown.text-danger
+            - elsif video.mixed?
+              i.me-2.fa-solid.fa-face-grimace.text-warning
+            - else 
+              i.me-2.fa-solid.fa-spinner.text-secondary
             a href="videos/#{video.origin_id}" class="btn btn-secondary" View
