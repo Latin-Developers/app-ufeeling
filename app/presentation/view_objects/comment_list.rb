@@ -25,6 +25,10 @@ module Views
       @comments.select(&:negative?).size
     end
 
+    def mixed_count
+      @comments.select(&:mixed?).size
+    end
+
     def any?
       @comments.any?
     end

@@ -17,7 +17,8 @@ module Views
       { title: 'Comments Summary by Sentiment',
         positive_count: @comments.positive_count,
         neutral_count: @comments.neutral_count,
-        negative_count: @comments.negative_count }
+        negative_count: @comments.negative_count,
+        mixed_count: @comments.mixed_count }
     end
 
     def video_image

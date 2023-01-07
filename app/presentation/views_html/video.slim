@@ -67,9 +67,11 @@
           - if comment.positive?
             i.fa-solid.fa-face-smile-beam.text-success
           - if comment.neutral?
-            i.fa-solid.fa-face-meh-blank.text-warning
+            i.fa-solid.fa-face-meh-blank.text-secondary
           - if comment.negative?
             i.fa-solid.fa-face-frown.text-danger
+          - if comment.mixed?
+            i.fa-solid.fa-face-grimace.text-warning
         .col
           .comment-info
             span
@@ -83,7 +85,7 @@
           = comment.text_original
 
   javascript: 
-    var pieColors = ["#5db85b", "#ffc008", "#d9534f"];
+    var pieColors = ["#5db85b", "#ffc008", "#d9534f", "#4e5d6c"];
 
     // Build the chart
     Highcharts.chart('container', {
@@ -117,8 +119,9 @@
         name: 'Comments',
         data: [
           { name: 'Positive', y: #{video_info.comments_summary[:positive_count]} },
-          { name: 'Neutral', y: #{video_info.comments_summary[:neutral_count]} },
-          { name: 'Negative', y: #{video_info.comments_summary[:negative_count]} }
+          { name: 'Mixed', y: #{video_info.comments_summary[:mixed_count]}},
+          { name: 'Negative', y: #{video_info.comments_summary[:negative_count]} },
+          { name: 'Neutral', y: #{video_info.comments_summary[:neutral_count]} }
         ]
       }]
     });

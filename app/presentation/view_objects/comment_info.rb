@@ -32,6 +32,10 @@ module Views
       sentiment.sentiment_name == 'negative'
     end
 
+    def mixed?
+      sentiment.sentiment_name == 'mixed'
+    end
+
     def published_date
       year = published_info.year.to_s.rjust(4, '0')
       month = published_info.month.to_s.rjust(2, '0')
