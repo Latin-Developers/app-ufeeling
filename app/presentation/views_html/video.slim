@@ -71,8 +71,8 @@
 
   / Comments trend
   - if video_info.show_comments_trend?
-    #trend-container
-    #line-container
+    #trend-container.mt-4
+    #line-container.mt-4
 
   / Comments
   - if video_info.show_comments?
@@ -156,16 +156,7 @@
             }
         },
         legend: {
-            align: 'left',
-            x: 70,
-            verticalAlign: 'top',
-            y: 70,
-            floating: true,
-            backgroundColor:
-                Highcharts.defaultOptions.legend.backgroundColor || 'white',
-            borderColor: '#CCC',
-            borderWidth: 1,
-            shadow: false
+          itemStyle: {"color": "#ffffff"}
         },
         tooltip: {
             headerFormat: '<b>{point.x}</b><br/>',
@@ -204,18 +195,16 @@
             type: 'area'
         },
         title: {
-            useHTML: true,
-            text: 'Comments Sentiment Percentage Distribution'
-        },
-        subtitle: {
-            text: 'Source: ' +
-                '<a href="https://energiogklima.no/klimavakten/land-med-hoyest-utslipp/"' +
-                'target="_blank">Energi og Klima</a>'
+            text: 'Comments Sentiment Percentage Distribution',
+            align: 'left'
         },
         accessibility: {
             point: {
                 valueDescriptionFormat: '{index}. {point.category}, {point.y:,.1f} comments, {point.percentage:.1f}%.'
             }
+        },
+        legend: {
+          itemStyle: {"color": "#ffffff"}
         },
         yAxis: {
             labels: {
@@ -229,10 +218,10 @@
             pointFormat: '<span style="color:{series.color}">{series.name}</span>: <b>{point.percentage:.1f}%</b> ({point.y:,.1f} comments)<br/>',
             split: true
         },
+        xAxis: {
+            categories: comments_trend.dates
+        },
         plotOptions: {
-            series: {
-                pointStart: 1990
-            },
             area: {
                 stacking: 'percent',
                 marker: {
