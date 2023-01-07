@@ -15,11 +15,6 @@ module UFeeling
         def self.to_encoded(data)
           Base64.urlsafe_encode64(data.to_json)
         end
-
-        # Use in tests to create a WatchedList object from a list
-        def self.to_request(list)
-          WatchedList.new('video_ids', 'categories' => to_encoded(list))
-        end
       end
     end
   end

@@ -70,7 +70,7 @@ module UFeeling
 
       def get_comments(input)
         unless input[:processing]
-          UFeeling::Gateway::Api.new(UFeeling::App.config).comments_list(input[:video_id])
+          UFeeling::Gateway::Api.new(UFeeling::App.config).comments_list(input[:video_id], input[:sentiment_selected])
             .then do |result|
               input[:comments_json] = result.payload
               result.success? ? Success(input) : Failure(result.message)
@@ -78,8 +78,8 @@ module UFeeling
         end
 
         Success(input)
-      rescue StandardError
-        Failure('Could not obtain comments')
+        # rescue StandardError
+        #   Failure('Could not obtain comments')
       end
 
       def format_comments(input)

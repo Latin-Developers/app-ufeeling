@@ -36,8 +36,8 @@ module UFeeling
         @request.obtain_categories
       end
 
-      def comments_list(video_id)
-        @request.get_comments(video_id)
+      def comments_list(video_id, sentiment_selected)
+        @request.get_comments(video_id, sentiment_selected)
       end
 
       # TODO: get_sentiment_summary
@@ -76,8 +76,9 @@ module UFeeling
           call_api('get', ['categories'])
         end
 
-        def get_comments(video_id)
-          call_api('get', ['videos', video_id, 'comments'])
+        def get_comments(video_id, sentiment_id)
+          call_api('get', ['videos', video_id, 'comments'],
+                   'sentiment_id' => Value::WatchedList.to_encoded(sentiment_id))
         end
         # TODO: get_sentiment_summary
         # TODO get_sentiment_trend

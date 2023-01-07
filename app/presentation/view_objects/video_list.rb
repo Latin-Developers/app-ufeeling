@@ -6,7 +6,7 @@ module Views
   # View for a a list of video entities
   class VideoList
     def initialize(videos)
-      @videos = videos.map.with_index { |video, i| VideoInfo.new(video, nil, i) }
+      @videos = videos.map.with_index { |video, i| VideoInfo.new(video, [], [], nil, i) }
     end
 
     def each(&)
