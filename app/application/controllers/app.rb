@@ -82,6 +82,8 @@ module UFeeling
             routing.get do
               sentiment_selected = routing.params['sentiment']&.to_i
               sentiment_selected = nil if sentiment_selected.nil? || sentiment_selected.zero?
+              view = routing.params['view']
+              view = 'comments' if view.nil? || view.empty?
 
               # Get Video from API
               video_result = Services::GetVideo.new.call(
@@ -103,7 +105,8 @@ module UFeeling
                 video_info = Views::VideoInfo.new(video_result.value![:video],
                                                   video_result.value![:comments]&.comments || [],
                                                   video_result.value![:sentiments]&.sentiments || [],
-                                                  sentiment_selected)
+                                                  sentiment_selected,
+                                                  view)
 
                 # Only use browser caching in production
                 App.configure :production do

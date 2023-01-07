@@ -6,16 +6,16 @@ require_relative 'sentiment_list'
 module Views
   # View for a single video entity
   class VideoInfo
-    def initialize(video, comments, sentiments, sentiment_selected, index = nil)
+    def initialize(video, comments, sentiments, sentiment_selected, view = nil)
       @video = video
       @comments = CommentList.new(comments)
       sentiments.insert(0, { sentiment: 'All' })
       @sentiments = SentimentList.new(sentiments)
       @sentiment_selected = sentiment_selected
-      @index = index
+      @view = view
     end
 
-    attr_reader :video, :comments, :sentiments, :sentiment_selected
+    attr_reader :video, :comments, :sentiments, :sentiment_selected, :view
 
     def comments_summary
       { title: 'Comments Summary by Sentiment',
@@ -23,6 +23,19 @@ module Views
         neutral_count: @comments.neutral_count,
         negative_count: @comments.negative_count,
         mixed_count: @comments.mixed_count }
+    end
+
+    def show_comments?
+      puts @view
+      @view == 'comments'
+    end
+
+    def show_comments_trend?
+      @view == 'comments-trend'
+    end
+
+    def show_video_trend?
+      @view == 'video-trend'
     end
 
     def video_image
