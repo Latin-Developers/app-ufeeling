@@ -10,23 +10,27 @@ module Views
     end
 
     def each(&)
-      @comments.each(&)
+      @comments.sort { |a, b| b.published_date <=> a.published_date }.each(&)
     end
 
-    def positive_count
-      @comments.select(&:positive?).size
+    def dates
+      @comments.map(&:published_date).uniq!.sort
     end
 
-    def neutral_count
-      @comments.select(&:neutral?).size
+    def positive_count(date: nil)
+      @comments.select { |c| c.positive? && (date.nil? || date == c.published_date) }.size
     end
 
-    def negative_count
-      @comments.select(&:negative?).size
+    def neutral_count(date: nil)
+      @comments.select { |c| c.neutral? && (date.nil? || date == c.published_date) }.size
     end
 
-    def mixed_count
-      @comments.select(&:mixed?).size
+    def negative_count(date: nil)
+      @comments.select { |c| c.negative? && (date.nil? || date == c.published_date) }.size
+    end
+
+    def mixed_count(date: nil)
+      @comments.select { |c| c.mixed? && (date.nil? || date == c.published_date) }.size
     end
 
     def any?

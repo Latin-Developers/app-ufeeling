@@ -26,16 +26,15 @@ module Views
     end
 
     def show_comments?
-      puts @view
-      @view == 'comments'
+      @view == 'comments' && @comments.any?
     end
 
     def show_comments_trend?
-      @view == 'comments-trend'
+      @view == 'comments-trend' && @comments.any?
     end
 
     def show_video_trend?
-      @view == 'video-trend'
+      @view == 'video-trend' && @comments.any?
     end
 
     def video_image
