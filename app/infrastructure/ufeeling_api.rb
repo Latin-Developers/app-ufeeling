@@ -16,6 +16,10 @@ module UFeeling
         @request.get_root.success?
       end
 
+      def obtain_sentiments
+        @request.obtain_sentiments
+      end
+
       def video_list(video_ids, categories)
         @request.video_list(video_ids, categories)
       end
@@ -58,6 +62,10 @@ module UFeeling
 
         def get_video(video_id)
           call_api('get', ['videos', video_id])
+        end
+
+        def obtain_sentiments
+          call_api('get', ['sentiments'])
         end
 
         def add_video(video_id)

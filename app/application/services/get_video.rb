@@ -10,20 +10,14 @@ module UFeeling
 
       step :get_video
       step :format_video
+      step :obtain_sentiments
+      step :format_sentiments
       step :get_comments
       step :format_comments
       # TODO: step :get_summary
       # TODO: step :format_summary
 
       private
-
-      # def validate_video(input)
-      #   if input[:watched_list].include? input[:video_id]
-      #     Success(input)
-      #   else
-      #     Failure('Please first request this video to be added to your list')
-      #   end
-      # end
 
       def get_video(input)
         result = UFeeling::Gateway::Api.new(UFeeling::App.config)
@@ -46,6 +40,32 @@ module UFeeling
         Success(input)
       rescue StandardError
         Failure('Could not parse response from API')
+      end
+
+      def obtain_sentiments(input)
+        unless input[:processing]
+          UFeeling::Gateway::Api.new(UFeeling::App.config).obtain_sentiments
+            .then do |result|
+              input[:sentiments_json] = result.payload
+              result.success? ? Success(input) : Failure(result.message)
+            end
+        end
+
+        Success(input)
+      rescue StandardError
+        Failure('Could not get sentiments available')
+      end
+
+      def format_sentiments(input)
+        unless input[:processing]
+          Representer::SentimentsList.new(OpenStruct.new) # rubocop:disable Style/OpenStructUse
+            .from_json(input[:sentiments_json])
+            .then { |sentiments| input[:sentiments] = sentiments }
+        end
+
+        Success(input)
+      rescue StandardError
+        Failure('Could not format sentiments available')
       end
 
       def get_comments(input)

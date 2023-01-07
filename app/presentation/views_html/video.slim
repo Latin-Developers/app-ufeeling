@@ -56,10 +56,9 @@
       = "Comments"
       i.fa-solid.fa-rotate.text-primary.ms-2
 
-    a class="btn m-1 btn-primary" href="/"  All
-    a class="btn m-1 btn-outline-primary" href="/"  Positive
-    a class="btn m-1 btn-outline-primary" href="/"  Neutral 
-    a class="btn m-1 btn-outline-primary" href="/"  Negative
+    - video_info.sentiments.each do |sentiment|
+      a class="btn m-1 #{sentiment.id == video_info.sentiment_selected ? 'btn-primary' : 'btn-outline-primary'}" href="#{video_info.sentiment_comments_url(sentiment.id)}"
+        = sentiment.name_display
 
     - video_info.comments.each do |comment|
       .row.mb-4.mt-2

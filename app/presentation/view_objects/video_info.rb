@@ -1,17 +1,21 @@
 # frozen_string_literal: true
 
 require_relative 'comment_list'
+require_relative 'sentiment_list'
 
 module Views
   # View for a single video entity
   class VideoInfo
-    def initialize(video, comments, index = nil)
+    def initialize(video, comments, sentiments, sentiment_selected, index = nil)
       @video = video
       @comments = CommentList.new(comments)
+      sentiments.insert(0, { sentiment: 'All' })
+      @sentiments = SentimentList.new(sentiments)
+      @sentiment_selected = sentiment_selected
       @index = index
     end
 
-    attr_reader :video, :comments
+    attr_reader :video, :comments, :sentiments, :sentiment_selected
 
     def comments_summary
       { title: 'Comments Summary by Sentiment',
@@ -46,6 +50,14 @@ module Views
 
     def author_name
       author.name
+    end
+
+    def all_comments_url
+      "/videos/#{origin_id}"
+    end
+
+    def sentiment_comments_url(sentiment_id)
+      "/videos/#{origin_id}?sentiment=#{sentiment_id}"
     end
 
     private

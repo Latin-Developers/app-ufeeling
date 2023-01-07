@@ -47,7 +47,10 @@ module UFeeling
           session[:watching] = videos.map(&:origin_id)
         end
 
-        home_info = Views::HomeInfo.new(videos, categories, videos_by_category, category_selected)
+        home_info = Views::HomeInfo.new(videos,
+                                        categories,
+                                        videos_by_category,
+                                        category_selected)
 
         view 'home', locals: { info: home_info }
       end
@@ -77,10 +80,14 @@ module UFeeling
           # [GET]  /videos/:video_origin_id
           routing.is do
             routing.get do
+              sentiment_selected = routing.params['sentiment']&.to_i
+              sentiment_selected = nil if sentiment_selected.nil? || sentiment_selected.zero?
+
               # Get Video from API
               video_result = Services::GetVideo.new.call(
                 watched_list: session[:watching] || [],
-                video_id: video_origin_id
+                video_id: video_origin_id,
+                sentiment_selected:
               )
 
               if video_result.failure?
@@ -93,7 +100,10 @@ module UFeeling
               if analize.processing?
                 flash.now[:notice] = 'The video is under analisis'
               else
-                video_info = Views::VideoInfo.new(video_result.value![:video], video_result.value![:comments]&.comments)
+                video_info = Views::VideoInfo.new(video_result.value![:video],
+                                                  video_result.value![:comments]&.comments,
+                                                  video_result.value![:sentiments]&.sentiments,
+                                                  sentiment_selected)
 
                 # Only use browser caching in production
                 App.configure :production do
