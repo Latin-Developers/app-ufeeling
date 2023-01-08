@@ -110,7 +110,7 @@ module UFeeling
 
                 # Only use browser caching in production
                 App.configure :production do
-                  response.expires 60, public: true
+                  response.expires 5, public: true
                 end
               end
 
