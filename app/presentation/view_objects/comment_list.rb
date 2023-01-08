@@ -14,7 +14,7 @@ module Views
     end
 
     def dates
-      @comments.map(&:published_date).uniq!.sort
+      @comments.map(&:published_date).sort.uniq
     end
 
     def positive_count(date: nil)
