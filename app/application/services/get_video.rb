@@ -78,8 +78,8 @@ module UFeeling
         end
 
         Success(input)
-        # rescue StandardError
-        #   Failure('Could not obtain comments')
+      rescue StandardError
+        Failure('Could not obtain comments')
       end
 
       def format_comments(input)

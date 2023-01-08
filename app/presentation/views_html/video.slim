@@ -56,17 +56,16 @@
     li.nav-item 
       a class="nav-link #{video_info.show_comments? ? 'active' : ''}" href="?view=comments" Comments
     li.nav-item 
-      a class="nav-link #{video_info.show_comments_trend? ? 'active' : ''}" href="?view=comments-trend" Comments Sentiment Trend
+      a class="nav-link #{video_info.show_comments_trend? ? 'active' : ''}" href="?view=comments-trend" Sentiment Trend
     / li.nav-item 
     /   a class="nav-link #{video_info.show_video_trend? ? 'active' : ''}" href="?view=video-trend" Video Sentiment Trend
     li.nav-item 
-      a class="nav-link " href="?view=video-sentiment" 
+      a class="nav-link " href="/videos/#{video_info.origin_id}/update" 
         h5.m-0 
-          i.fa-solid.fa-rotate.text-primary.ms data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Update Comments"
+          i.fa-solid.fa-rotate.text-primary.ms
 
   / No Comments
   - unless video_info.comments.any?
-    button data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Update Comments" Test
     .h4.p-4.text-center.text-warning  The video requested does not have any comment yet. Please update try again later.
 
   / Comments trend

@@ -49,7 +49,7 @@ module UFeeling
 
       def id_query_field(video_url)
         includes_other_params = video_url.include? '&'
-        includes_other_params ? video_url.split('=')[-2] : video_url.split('=')[-1]
+        includes_other_params ? video_url.split('&')[0].split('=')[-1] : video_url.split('=')[-1]
       end
     end
   end

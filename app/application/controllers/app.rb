@@ -123,10 +123,20 @@ module UFeeling
             end
           end
 
-          # [...]  /videos/:video_origin_id/comments
-          routing.on 'comments' do
-            # [GET]  /videos/:video_origin_id/comments
-            # routing.get {}
+          # [...]  /videos/:video_origin_id/update
+          routing.on 'update' do
+            # [GET]  /videos/:video_origin_id/update
+            routing.get do
+              update_video = Services::UpdateVideo.new.call(video_id: video_origin_id)
+
+              if update_video.failure?
+                flash[:error] = update_video.failure
+              else
+                flash[:notice] = 'Video under analysis'
+              end
+
+              routing.redirect "/videos/#{video_origin_id}"
+            end
           end
         end
       end

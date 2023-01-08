@@ -32,6 +32,10 @@ module UFeeling
         @request.get_video(video_id)
       end
 
+      def update_video(video_id)
+        @request.update_video(video_id)
+      end
+
       def category_list
         @request.obtain_categories
       end
@@ -39,9 +43,6 @@ module UFeeling
       def comments_list(video_id, sentiment_selected)
         @request.get_comments(video_id, sentiment_selected)
       end
-
-      # TODO: get_sentiment_summary
-      # TODO get_sentiment_trend
 
       # HTTP request transmitter
       class Request
@@ -62,6 +63,10 @@ module UFeeling
 
         def get_video(video_id)
           call_api('get', ['videos', video_id])
+        end
+
+        def update_video(video_id)
+          call_api('put', ['videos', video_id])
         end
 
         def obtain_sentiments
