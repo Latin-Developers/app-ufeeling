@@ -107,11 +107,6 @@ module UFeeling
                                                   video_result.value![:sentiments]&.sentiments || [],
                                                   sentiment_selected,
                                                   view)
-
-                # Only use browser caching in production
-                App.configure :production do
-                  response.expires 5, public: true
-                end
               end
 
               processing = Views::VideoProcessing.new(
